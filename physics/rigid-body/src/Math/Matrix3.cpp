@@ -1,4 +1,5 @@
 #include "Math/Matrix3.hpp"
+#include <cmath>
 
 Matrix3::Matrix3(
     float m00, float m01, float m02,
@@ -25,6 +26,39 @@ void Matrix3::set(int row, int column, float value) {
 float Matrix3::get(int row, int column) const {
     return m[row][column];
 }
+
+Matrix3 Matrix3::inverse() const {
+
+    float determinant =
+        m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
+        - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
+        + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+
+    if (std::abs(determinant) < 0.000001f) {
+        return Matrix3(
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0
+        );
+    }
+
+    float inverseDeterminant = 1.0f / determinant;
+
+    return Matrix3(
+        (m[1][1] * m[2][2] - m[1][2] * m[2][1]) * inverseDeterminant,
+        (m[0][2] * m[2][1] - m[0][1] * m[2][2]) * inverseDeterminant,
+        (m[0][1] * m[1][2] - m[0][2] * m[1][1]) * inverseDeterminant,
+
+        (m[1][2] * m[2][0] - m[1][0] * m[2][2]) * inverseDeterminant,
+        (m[0][0] * m[2][2] - m[0][2] * m[2][0]) * inverseDeterminant,
+        (m[0][2] * m[1][0] - m[0][0] * m[1][2]) * inverseDeterminant,
+
+        (m[1][0] * m[2][1] - m[1][1] * m[2][0]) * inverseDeterminant,
+        (m[0][1] * m[2][0] - m[0][0] * m[2][1]) * inverseDeterminant,
+        (m[0][0] * m[1][1] - m[0][1] * m[1][0]) * inverseDeterminant
+    );
+}
+
 
 Vector3 Matrix3::operator*(const Vector3& vector) const {
     return Vector3(

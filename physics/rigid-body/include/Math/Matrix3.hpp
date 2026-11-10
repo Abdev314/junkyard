@@ -17,6 +17,7 @@ class Matrix3 {
 
         void set(int row, int column, float value);
         float get(int row, int column) const;
+        Matrix3 inverse() const;
 
         Vector3 operator*(const Vector3& vector) const;
         Matrix3 operator*(const Matrix3& other) const;
