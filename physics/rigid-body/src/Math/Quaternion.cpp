@@ -1,5 +1,6 @@
 #include "Math/Quaternion.hpp"
 #include <cmath>
+#include "Math/Vector3.hpp"
 
 Quaternion::Quaternion(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
@@ -22,5 +23,24 @@ Quaternion Quaternion::multiplication(const Quaternion& other) const {
         w * other.y - x * other.z + y * other.w + z * other.x,
         w * other.z + x * other.y - y * other.x + z * other.w,
         w * other.w - x * other.x - y * other.y - z * other.z
+    );
+}
+
+Quaternion Quaternion::fromAxisAngle(
+    const Vector3& axis,
+    float angle
+) {
+    float halfAngle = angle * 0.5f;
+
+    float sinHalfAngle = std::sin(halfAngle);
+    float cosHalfAngle = std::cos(halfAngle);
+
+    Vector3 normalizedAxis = axis.normalized();
+
+    return Quaternion(
+        normalizedAxis.getx() * sinHalfAngle,
+        normalizedAxis.gety() * sinHalfAngle,
+        normalizedAxis.getz() * sinHalfAngle,
+        cosHalfAngle
     );
 }

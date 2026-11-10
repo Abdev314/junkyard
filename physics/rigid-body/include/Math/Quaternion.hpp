@@ -1,5 +1,6 @@
 #ifndef QUATERNION_H
 #define QUATERNION_H
+#include "Math/Vector3.hpp"
 
 class Quaternion {
 
@@ -18,6 +19,7 @@ public:
 
     Quaternion normalize() const;
     Quaternion multiplication(const Quaternion& other) const;
+    static Quaternion fromAxisAngle( const Vector3& axis, float angle );
 };
 
 #endif
