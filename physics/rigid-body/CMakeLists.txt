@@ -19,10 +19,12 @@ set(SOURCES
     src/Physics/RigidBody.cpp
     src/Physics/Force.cpp
     src/Physics/Torque.cpp
+    
 
     src/Math/Vector3.cpp
     src/Math/Matrix3.cpp
     src/Math/Quaternion.cpp
+    src/Rendering/Camera.cpp
 )
 
 add_executable(rigid_body ${SOURCES})
